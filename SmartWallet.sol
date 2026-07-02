@@ -7,7 +7,13 @@ contract SmartWallet {
     constructor() {
         owner = msg.sender;
         event Deposit(address indexed sender, uint256 amount);
-        event Withdraw(address indexed to, uint256 amount);
+        function withdraw(uint256 amount) external {
+            require(msg.sender == owner, "Not owner");
+        
+            payable(owner).transfer(amount);
+        
+            emit Withdraw(owner, amount);
+        }
     }
 
     receive() external payable {
