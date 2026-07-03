@@ -13,8 +13,12 @@ contract SmartWallet {
             payable(owner).transfer(amount);
         
             emit Withdraw(owner, amount);
+
+        event OwnershipTransferred(
+            address indexed previousOwner,
+            address indexed newOwner);
         }
-    }
+}
 
     receive() external payable {
     emit Deposit(msg.sender, msg.value);
