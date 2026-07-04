@@ -5,7 +5,9 @@ contract SmartWallet {
     address public owner;
 
     constructor() {
-        owner = msg.sender;
+       owner = msg.sender;
+       emit OwnershipTransferred(address(0), owner);
+
         event Deposit(address indexed sender, uint256 amount);
         function withdraw(uint256 amount) external {
             require(msg.sender == owner, "Not owner");
