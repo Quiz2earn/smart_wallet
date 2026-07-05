@@ -6,15 +6,20 @@ contract SmartWallet {
 
     constructor() {
        owner = msg.sender;
+
        emit OwnershipTransferred(address(0), owner);
 
         event Deposit(address indexed sender, uint256 amount);
+
+
         function withdraw(uint256 amount) external {
+
             require(msg.sender == owner, "Not owner");
         
             payable(owner).transfer(amount);
         
             emit Withdraw(owner, amount);
+
 
         event OwnershipTransferred(
             address indexed previousOwner,
@@ -33,5 +38,8 @@ contract SmartWallet {
 
     function getBalance() external view returns (uint256) {
         return address(this).balance;
+    }
+    function getOwner() external view returns (address) {
+    return owner;
     }
 }
