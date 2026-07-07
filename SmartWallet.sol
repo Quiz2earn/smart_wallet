@@ -9,7 +9,15 @@ contract SmartWallet {
     address public owner;
 
     event Deposit(address indexed sender, uint256 amount);
-    event Withdraw(address indexed to, uint256 amount);
+
+    function withdraw(uint256 amount) external {
+    if (msg.sender != owner) revert NotOwner();
+
+    payable(owner).transfer(amount);
+
+    emit Withdraw(owner, amount);
+    }
+
     event OwnershipTransferred(
         address indexed previousOwner,
         address indexed newOwner
