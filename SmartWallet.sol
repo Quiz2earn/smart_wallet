@@ -39,6 +39,10 @@ contract SmartWallet {
             revert InsufficientBalance();
         }
 
+        if (address(this).balance < amount) {
+            revert InsufficientBalance();
+        }
+
         payable(owner).transfer(amount);
 
         emit Withdraw(owner, amount);
