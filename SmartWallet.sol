@@ -8,6 +8,8 @@ error InsufficientBalance();
 contract SmartWallet {
     address public owner;
 
+    bool public paused;
+
     event Deposit(address indexed sender, uint256 amount);
 
     function withdraw(uint256 amount) external {
