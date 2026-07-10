@@ -22,8 +22,10 @@ contract SmartWallet {
 
     event OwnershipTransferred(
         address indexed previousOwner,
-        address indexed newOwner
-    );
+        address indexed newOwner);
+
+    event Paused(address indexed account);
+    event Unpaused(address indexed account);
 
     constructor() {
         owner = msg.sender;
