@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 error NotOwner();
 error InvalidAddress();
 error InsufficientBalance();
+error ContractPaused();
 
 contract SmartWallet {
     address public owner;
