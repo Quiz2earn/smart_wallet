@@ -13,6 +13,14 @@ contract SmartWallet {
 
     event Deposit(address indexed sender, uint256 amount);
 
+    function pause() external {
+    if (msg.sender != owner) revert NotOwner();
+
+    paused = true;
+
+    emit Paused(msg.sender);
+    }
+
     function withdraw(uint256 amount) external {
     if (msg.sender != owner) revert NotOwner();
 
