@@ -21,6 +21,14 @@ contract SmartWallet {
     emit Paused(msg.sender);
     }
 
+    function unpause() external {
+    if (msg.sender != owner) revert NotOwner();
+
+    paused = false;
+
+    emit Unpaused(msg.sender);
+    }
+
     function withdraw(uint256 amount) external {
     if (msg.sender != owner) revert NotOwner();
 
