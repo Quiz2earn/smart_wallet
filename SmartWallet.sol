@@ -30,7 +30,10 @@ contract SmartWallet {
     }
 
     function withdraw(uint256 amount) external {
-    if (msg.sender != owner) revert NotOwner();
+        if (msg.sender != owner) revert 
+    NotOwner();
+
+        if (paused) revert ContractPaused();
 
     payable(owner).transfer(amount);
 
