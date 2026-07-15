@@ -47,6 +47,11 @@ contract SmartWallet {
     event Paused(address indexed account);
     event Unpaused(address indexed account);
 
+    struct Withdrawal {
+    uint256 amount;
+    uint256 timestamp;
+    }
+
     constructor() {
         owner = msg.sender;
         emit OwnershipTransferred(address(0), owner);
