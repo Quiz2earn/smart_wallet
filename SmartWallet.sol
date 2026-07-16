@@ -19,6 +19,8 @@ contract SmartWallet {
     paused = true;
 
     emit Paused(msg.sender);
+
+    Withdrawal[] private withdrawals;
     }
 
     function unpause() external {
