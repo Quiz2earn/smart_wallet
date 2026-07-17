@@ -77,6 +77,13 @@ contract SmartWallet {
         payable(owner).transfer(amount);
 
         emit Withdraw(owner, amount);
+
+        withdrawals.push(
+            Withdrawal({
+            amount: amount,
+            timestamp: block.timestamp
+            })
+        );
     }
 
     function transferOwnership(address newOwner) external {
