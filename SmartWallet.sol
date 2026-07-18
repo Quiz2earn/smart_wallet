@@ -6,14 +6,16 @@ error InvalidAddress();
 error InsufficientBalance();
 error ContractPaused();
 
-contract SmartWallet {
+contract SmartWallet
+{
     address public owner;
 
     bool public paused;
 
     event Deposit(address indexed sender, uint256 amount);
 
-    function pause() external {
+    function pause() external 
+    {
     if (msg.sender != owner) revert NotOwner();
 
     paused = true;
@@ -23,7 +25,8 @@ contract SmartWallet {
     Withdrawal[] private withdrawals;
     }
 
-    function unpause() external {
+    function unpause() external 
+    {
     if (msg.sender != owner) revert NotOwner();
 
     paused = false;
@@ -31,7 +34,8 @@ contract SmartWallet {
     emit Unpaused(msg.sender);
     }
 
-    function withdraw(uint256 amount) external {
+    function withdraw(uint256 amount) external 
+    {
         if (msg.sender != owner) revert 
     NotOwner();
 
@@ -49,28 +53,34 @@ contract SmartWallet {
     event Paused(address indexed account);
     event Unpaused(address indexed account);
 
-    struct Withdrawal {
+    struct Withdrawal
+    {
     uint256 amount;
     uint256 timestamp;
     }
 
-    constructor() {
+    constructor() 
+    {
         owner = msg.sender;
         emit OwnershipTransferred(address(0), owner);
     }
 
-    receive() external payable {
+    receive() external payable
+    {
         emit Deposit(msg.sender, msg.value);
     }
 
-    function withdraw(uint256 amount) external {
+    function withdraw(uint256 amount) external
+    {
         if (msg.sender != owner) revert NotOwner();
 
-        if (address(this).balance < amount) {
+        if (address(this).balance < amount) 
+        {
             revert InsufficientBalance();
         }
 
-        if (address(this).balance < amount) {
+        if (address(this).balance < amount) 
+        {
             revert InsufficientBalance();
         }
 
@@ -86,7 +96,8 @@ contract SmartWallet {
         );
     }
 
-    function transferOwnership(address newOwner) external {
+    function transferOwnership(address newOwner) external 
+    {
         if (msg.sender != owner) revert NotOwner();
         if (newOwner == address(0)) revert InvalidAddress();
 
@@ -96,11 +107,17 @@ contract SmartWallet {
         emit OwnershipTransferred(oldOwner, newOwner);
     }
 
-    function getBalance() external view returns (uint256) {
+    function getBalance() external view returns (uint256) 
+    {
         return address(this).balance;
     }
 
     function getOwner() external view returns (address) {
         return owner;
     }
+
+     function getWithdrawalCount() external view returns (uint256)
+        {
+        return withdrawals.length;
+        }
 }
