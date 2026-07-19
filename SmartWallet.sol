@@ -116,8 +116,18 @@ contract SmartWallet
         return owner;
     }
 
-     function getWithdrawalCount() external view returns (uint256)
+    function getWithdrawalCount() external view returns (uint256)
         {
         return withdrawals.length;
+        }
+
+    function getWithdrawal(uint256 index)
+        external
+        view
+        returns (uint256 amount, uint256 timestamp)
+        {
+        Withdrawal memory record = withdrawals[index];
+    
+        return (record.amount, record.timestamp);
         }
 }
