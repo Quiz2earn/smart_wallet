@@ -12,6 +12,8 @@ contract SmartWallet
 
     bool public paused;
 
+    uint256 public withdrawalLimit;
+
     event Deposit(address indexed sender, uint256 amount);
 
     function pause() external 
