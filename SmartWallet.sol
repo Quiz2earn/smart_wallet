@@ -64,6 +64,9 @@ contract SmartWallet
     constructor() 
     {
         owner = msg.sender;
+
+        withdrawalLimit = 10 ether;
+
         emit OwnershipTransferred(address(0), owner);
     }
 
