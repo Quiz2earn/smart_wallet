@@ -3,8 +3,9 @@ pragma solidity ^0.8.0;
 
 error NotOwner();
 error InvalidAddress();
-error InsufficientBalance();
 error ContractPaused();
+error InsufficientBalance();
+error WithdrawalLimitExceeded();
 
 contract SmartWallet
 {
