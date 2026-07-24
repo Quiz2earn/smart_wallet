@@ -44,6 +44,11 @@ contract SmartWallet
 
         if (paused) revert ContractPaused();
 
+        if (amount > withdrawalLimit)
+        {
+        revert WithdrawalLimitExceeded();
+        }
+
     payable(owner).transfer(amount);
 
     emit Withdraw(owner, amount);
