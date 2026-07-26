@@ -141,4 +141,11 @@ contract SmartWallet
     
         return (record.amount, record.timestamp);
         }
+
+    function setWithdrawalLimit(uint256 newLimit) external 
+    {
+    if (msg.sender != owner) revert NotOwner();
+
+    withdrawalLimit = newLimit;
+    }
 }
