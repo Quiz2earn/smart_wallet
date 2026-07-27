@@ -59,7 +59,10 @@ contract SmartWallet
         address indexed newOwner);
 
     event Paused(address indexed account);
+
     event Unpaused(address indexed account);
+
+    event WithdrawalLimitUpdated(uint256 oldLimit, uint256 newLimit);
 
     struct Withdrawal
     {
