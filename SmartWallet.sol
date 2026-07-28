@@ -147,8 +147,11 @@ contract SmartWallet
 
     function setWithdrawalLimit(uint256 newLimit) external 
     {
-    if (msg.sender != owner) revert NotOwner();
-
-    withdrawalLimit = newLimit;
+        if (msg.sender != owner) revert NotOwner();
+    
+        uint256 oldLimit = withdrawalLimit;
+        withdrawalLimit = newLimit;
+    
+        emit WithdrawalLimitUpdated(oldLimit, newLimit);
     }
 }
