@@ -15,6 +15,8 @@ contract SmartWallet
 
     uint256 public withdrawalLimit;
 
+    uint256 public lastWithdrawalTime;
+
     event Deposit(address indexed sender, uint256 amount);
 
     function pause() external 
