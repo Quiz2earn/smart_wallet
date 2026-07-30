@@ -40,20 +40,20 @@ contract SmartWallet
     }
 
     function withdraw(uint256 amount) external 
-    {
-        if (msg.sender != owner) revert 
-    NotOwner();
-
-        if (paused) revert ContractPaused();
-
-        if (amount > withdrawalLimit)
         {
-        revert WithdrawalLimitExceeded();
-        }
+            if (msg.sender != owner) revert 
+            NotOwner();
+    
+            if (paused) revert ContractPaused();
+    
+            if (amount > withdrawalLimit)
+            {
+            revert WithdrawalLimitExceeded();
+            }
+    
+        payable(owner).transfer(amount);
 
-    payable(owner).transfer(amount);
-
-    emit Withdraw(owner, amount);
+        emit Withdraw(owner, amount);
     }
 
     event OwnershipTransferred(
@@ -103,6 +103,7 @@ contract SmartWallet
         payable(owner).transfer(amount);
 
         emit Withdraw(owner, amount);
+        lastWithdrawalTime = block.timestamp;
 
         withdrawals.push(
             Withdrawal({
