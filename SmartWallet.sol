@@ -19,6 +19,8 @@ contract SmartWallet
 
     event Deposit(address indexed sender, uint256 amount);
 
+    event WithdrawalTimeUpdated(uint256 timestamp);
+
     function pause() external 
     {
     if (msg.sender != owner) revert NotOwner();
