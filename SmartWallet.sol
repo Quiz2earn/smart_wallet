@@ -107,6 +107,8 @@ contract SmartWallet
         emit Withdraw(owner, amount);
         lastWithdrawalTime = block.timestamp;
 
+        emit WithdrawalTimeUpdated(block.timestamp);
+
         withdrawals.push(
             Withdrawal({
             amount: amount,
