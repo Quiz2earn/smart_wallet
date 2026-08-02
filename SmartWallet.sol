@@ -161,4 +161,11 @@ contract SmartWallet
     
         emit WithdrawalLimitUpdated(oldLimit, newLimit);
     }
+
+
+    function getLastWithdrawalTime() external view returns (uint256) 
+    {
+    return lastWithdrawalTime;
+    }
+
 }
