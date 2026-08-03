@@ -13,6 +13,8 @@ contract SmartWallet
 
     bool public paused;
 
+    uint256 public totalDeposits;
+
     uint256 public withdrawalLimit;
 
     uint256 public lastWithdrawalTime;
