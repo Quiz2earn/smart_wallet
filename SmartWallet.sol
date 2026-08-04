@@ -87,6 +87,9 @@ contract SmartWallet
 
     receive() external payable
     {
+
+        totalDeposits++;
+
         emit Deposit(msg.sender, msg.value);
     }
 
