@@ -21,6 +21,8 @@ contract SmartWallet
 
     event Deposit(address indexed sender, uint256 amount);
 
+    event DepositCountUpdated(uint256 totalDeposits);
+
     event WithdrawalTimeUpdated(uint256 timestamp);
 
     function pause() external 
