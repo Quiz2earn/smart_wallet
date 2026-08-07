@@ -93,6 +93,8 @@ contract SmartWallet
         totalDeposits++;
 
         emit Deposit(msg.sender, msg.value);
+
+        emit DepositCountUpdated(totalDeposits);
     }
 
     function withdraw(uint256 amount) external
