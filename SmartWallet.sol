@@ -177,4 +177,9 @@ contract SmartWallet
     return lastWithdrawalTime;
     }
 
+    function getTotalDeposits() external view returns (uint256)   
+    {
+    return totalDeposits;
+    }
+
 }
