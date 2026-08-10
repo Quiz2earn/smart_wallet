@@ -13,6 +13,8 @@ contract SmartWallet
 
     bool public paused;
 
+    mapping(address => bool) public whitelist;
+
     uint256 public totalDeposits;
 
     uint256 public withdrawalLimit;
