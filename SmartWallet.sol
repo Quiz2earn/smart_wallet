@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 error NotOwner();
 error InvalidAddress();
 error ContractPaused();
+error NotWhitelisted();
 error InsufficientBalance();
 error WithdrawalLimitExceeded();
 
