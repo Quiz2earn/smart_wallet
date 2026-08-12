@@ -28,6 +28,8 @@ contract SmartWallet
 
     event WithdrawalTimeUpdated(uint256 timestamp);
 
+    event WhitelistUpdated(address indexed account, bool status);
+
     function pause() external 
     {
     if (msg.sender != owner) revert NotOwner();
