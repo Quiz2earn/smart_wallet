@@ -67,6 +67,17 @@ contract SmartWallet
         emit Withdraw(owner, amount);
     }
 
+    function setWhitelist(address account, bool status) external 
+    {
+
+    if (msg.sender != owner) revert NotOwner();
+    if (account == address(0)) revert InvalidAddress();
+
+    whitelist[account] = status;
+
+    emit WhitelistUpdated(account, status);
+    }
+    
     event OwnershipTransferred(
         address indexed previousOwner,
         address indexed newOwner);
