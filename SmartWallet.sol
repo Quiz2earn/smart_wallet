@@ -56,6 +56,8 @@ contract SmartWallet
             NotOwner();
     
             if (paused) revert ContractPaused();
+
+            if (!whitelist[msg.sender]) revert NotWhitelisted();
     
             if (amount > withdrawalLimit)
             {
