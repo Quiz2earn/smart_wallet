@@ -34,6 +34,8 @@ contract SmartWallet
     {
     if (msg.sender != owner) revert NotOwner();
 
+    whitelist[msg.sender] = true;
+
     paused = true;
 
     emit Paused(msg.sender);
@@ -51,7 +53,7 @@ contract SmartWallet
     }
 
     function withdraw(uint256 amount) external 
-        {
+     {
             if (msg.sender != owner) revert 
             NotOwner();
     
@@ -64,9 +66,9 @@ contract SmartWallet
             revert WithdrawalLimitExceeded();
             }
     
-        payable(owner).transfer(amount);
+     payable(owner).transfer(amount);
 
-        emit Withdraw(owner, amount);
+     emit Withdraw(owner, amount);
     }
 
     function setWhitelist(address account, bool status) external 
