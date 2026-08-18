@@ -202,4 +202,9 @@ contract SmartWallet
     return totalDeposits;
     }
 
+    function isWhitelisted(address account) external view returns (bool)
+    {
+    return whitelist[account];
+    }
+
 }
