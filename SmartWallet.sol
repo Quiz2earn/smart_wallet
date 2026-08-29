@@ -81,7 +81,7 @@ contract SmartWallet
 
     whitelist[account] = status;
 
-    if (status) 
+   if (status && !whitelist[account])
     {
     whitelistCount++;
     }
