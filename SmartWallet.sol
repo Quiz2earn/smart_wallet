@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 error NotOwner();
+error AlreadyPaused();
 error InvalidAddress();
 error ContractPaused();
 error NotWhitelisted();
