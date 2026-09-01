@@ -35,24 +35,27 @@ contract SmartWallet
 
     function pause() external 
     {
-    if (msg.sender != owner) revert NotOwner();
+            if (msg.sender != owner) revert 
+        NotOwner();
 
-    whitelist[msg.sender] = true;
+            if (paused) revert AlreadyPaused();
 
-    paused = true;
-
-    emit Paused(msg.sender);
-
-    Withdrawal[] private withdrawals;
+            whitelist[msg.sender] = true;
+        
+            paused = true;
+        
+            emit Paused(msg.sender);
+        
+            Withdrawal[] private withdrawals;
     }
 
     function unpause() external 
     {
-    if (msg.sender != owner) revert NotOwner();
-
-    paused = false;
-
-    emit Unpaused(msg.sender);
+            if (msg.sender != owner) revert NotOwner();
+        
+            paused = false;
+        
+            emit Unpaused(msg.sender);
     }
 
     function withdraw(uint256 amount) external 
@@ -76,24 +79,24 @@ contract SmartWallet
 
     function setWhitelist(address account, bool status) external
     {
-        if (msg.sender != owner) revert NotOwner();
-        if (account == address(0)) revert InvalidAddress();
-    
-        bool previousStatus = whitelist[account];
-    
-        whitelist[account] = status;
-    
-        if (status && !previousStatus) 
-        {
-            whitelistCount++;
-        }
-    
-        if (!status && previousStatus)     
-        {
-            whitelistCount--;
-        }
-    
-        emit WhitelistUpdated(account, status);
+            if (msg.sender != owner) revert NotOwner();
+            if (account == address(0)) revert InvalidAddress();
+        
+            bool previousStatus = whitelist[account];
+        
+            whitelist[account] = status;
+        
+            if (status && !previousStatus) 
+            {
+                whitelistCount++;
+            }
+        
+            if (!status && previousStatus)     
+            {
+                whitelistCount--;
+            }
+        
+            emit WhitelistUpdated(account, status);
     }
     
     event OwnershipTransferred(
