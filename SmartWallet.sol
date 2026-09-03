@@ -6,6 +6,7 @@ error AlreadyPaused();
 error InvalidAddress();
 error ContractPaused();
 error NotWhitelisted();
+error AlreadyUnpaused();
 error InsufficientBalance();
 error WithdrawalLimitExceeded();
 
