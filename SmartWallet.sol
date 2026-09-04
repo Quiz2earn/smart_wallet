@@ -50,17 +50,17 @@ contract SmartWallet
             Withdrawal[] private withdrawals;
     }
 
-    function unpause() external 
+   function unpause() external 
     {
-            if (msg.sender != owner) revert NotOwner();
-        
-            paused = false;
-        
-            emit Unpaused(msg.sender);
+        if (msg.sender != owner) revert NotOwner();
+        if (!paused) revert AlreadyUnpaused();
+    
+        paused = false;
+    
+        emit Unpaused(msg.sender);
     }
-
     function withdraw(uint256 amount) external 
-     {
+    {
             if (msg.sender != owner) revert 
             NotOwner();
     
