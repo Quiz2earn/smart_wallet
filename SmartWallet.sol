@@ -8,6 +8,7 @@ error ContractPaused();
 error NotWhitelisted();
 error AlreadyUnpaused();
 error InsufficientBalance();
+error WithdrawalBelowMinimum();
 error WithdrawalLimitExceeded();
 
 contract SmartWallet
@@ -23,6 +24,8 @@ contract SmartWallet
     uint256 public totalDeposits;
 
     uint256 public withdrawalLimit;
+
+    uint256 public minimumWithdrawal;
 
     uint256 public lastWithdrawalTime;
 
@@ -59,19 +62,24 @@ contract SmartWallet
     
         emit Unpaused(msg.sender);
     }
-    function withdraw(uint256 amount) external 
+  function withdraw(uint256 amount) external 
     {
-            if (msg.sender != owner) revert 
-            NotOwner();
+         if (msg.sender != owner) revert 
+         NotOwner();
     
-            if (paused) revert ContractPaused();
+         if (paused) revert ContractPaused();
 
-            if (!whitelist[msg.sender]) revert NotWhitelisted();
+         if (!whitelist[msg.sender]) revert NotWhitelisted();
     
-            if (amount > withdrawalLimit)
-            {
-            revert WithdrawalLimitExceeded();
-            }
+        if (amount > withdrawalLimit)
+        {
+          revert WithdrawalLimitExceeded();
+        }
+
+        if (amount < minimumWithdrawal) 
+        {
+            revert WithdrawalBelowMinimum();
+        }
     
      payable(owner).transfer(amount);
 
@@ -122,6 +130,8 @@ contract SmartWallet
 
         withdrawalLimit = 10 ether;
 
+        minimumWithdrawal = 0.01 ether;
+
         emit OwnershipTransferred(address(0), owner);
     }
 
@@ -152,6 +162,7 @@ contract SmartWallet
         payable(owner).transfer(amount);
 
         emit Withdraw(owner, amount);
+
         lastWithdrawalTime = block.timestamp;
 
         emit WithdrawalTimeUpdated(block.timestamp);
