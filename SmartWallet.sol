@@ -11,6 +11,8 @@ error InsufficientBalance();
 error WithdrawalBelowMinimum();
 error WithdrawalLimitExceeded();
 
+
+
 contract SmartWallet
 {
     address public owner;
@@ -37,6 +39,13 @@ contract SmartWallet
 
     event WhitelistUpdated(address indexed account, bool status);
 
+    event MinimumWithdrawalUpdated(
+    uint256 oldMinimum,
+    uint256 newMinimum
+    );
+
+
+
     function pause() external 
     {
             if (msg.sender != owner) revert 
@@ -53,6 +62,8 @@ contract SmartWallet
             Withdrawal[] private withdrawals;
     }
 
+
+
    function unpause() external 
     {
         if (msg.sender != owner) revert NotOwner();
@@ -62,7 +73,22 @@ contract SmartWallet
     
         emit Unpaused(msg.sender);
     }
-  function withdraw(uint256 amount) external 
+
+
+
+    function setMinimumWithdrawal(uint256 newMinimum) external 
+    {
+         if (msg.sender != owner) revert NotOwner();
+    
+         uint256 oldMinimum = minimumWithdrawal;
+         minimumWithdrawal = newMinimum;
+    
+         emit MinimumWithdrawalUpdated(oldMinimum, newMinimum);
+    }
+
+
+
+   function withdraw(uint256 amount) external 
     {
          if (msg.sender != owner) revert 
          NotOwner();
@@ -86,6 +112,8 @@ contract SmartWallet
      emit Withdraw(owner, amount);
     }
 
+
+
     function setWhitelist(address account, bool status) external
     {
             if (msg.sender != owner) revert NotOwner();
@@ -107,6 +135,7 @@ contract SmartWallet
         
             emit WhitelistUpdated(account, status);
     }
+
     
     event OwnershipTransferred(
         address indexed previousOwner,
