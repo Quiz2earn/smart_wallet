@@ -8,6 +8,7 @@ error ContractPaused();
 error NotWhitelisted();
 error AlreadyUnpaused();
 error InsufficientBalance();
+error MinimumExceedsLimit();
 error WithdrawalBelowMinimum();
 error WithdrawalLimitExceeded();
 
@@ -76,41 +77,45 @@ contract SmartWallet
 
 
 
-    function setMinimumWithdrawal(uint256 newMinimum) external 
-    {
-         if (msg.sender != owner) revert NotOwner();
-    
-         uint256 oldMinimum = minimumWithdrawal;
-         minimumWithdrawal = newMinimum;
-    
-         emit MinimumWithdrawalUpdated(oldMinimum, newMinimum);
-    }
+    function setMinimumWithdrawal(uint256 newMinimum) external
+        {
+            if (msg.sender != owner) revert NotOwner();
+        
+            if (newMinimum > withdrawalLimit) {
+                revert MinimumExceedsLimit();
+            }
+        
+            uint256 oldMinimum = minimumWithdrawal;
+            minimumWithdrawal = newMinimum;
+        
+            emit MinimumWithdrawalUpdated(oldMinimum, newMinimum);
+        }
 
 
 
    function withdraw(uint256 amount) external 
-    {
-         if (msg.sender != owner) revert 
-         NotOwner();
-    
-         if (paused) revert ContractPaused();
-
-         if (!whitelist[msg.sender]) revert NotWhitelisted();
-    
-        if (amount > withdrawalLimit)
         {
-          revert WithdrawalLimitExceeded();
-        }
-
-        if (amount < minimumWithdrawal) 
-        {
-            revert WithdrawalBelowMinimum();
-        }
+            if (msg.sender != owner) revert 
+            NotOwner();
+        
+            if (paused) revert ContractPaused();
     
-     payable(owner).transfer(amount);
-
-     emit Withdraw(owner, amount);
-    }
+            if (!whitelist[msg.sender]) revert NotWhitelisted();
+        
+            if (amount > withdrawalLimit)
+            {
+              revert WithdrawalLimitExceeded();
+            }
+    
+            if (amount < minimumWithdrawal) 
+            {
+                revert WithdrawalBelowMinimum();
+            }
+        
+         payable(owner).transfer(amount);
+    
+         emit Withdraw(owner, amount);
+        }
 
 
 
