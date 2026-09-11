@@ -32,6 +32,8 @@ contract SmartWallet
 
     uint256 public lastWithdrawalTime;
 
+    uint256 public minimumWithdrawalUpdates;
+
     event Deposit(address indexed sender, uint256 amount);
 
     event DepositCountUpdated(uint256 totalDeposits);
@@ -87,8 +89,11 @@ contract SmartWallet
         
             uint256 oldMinimum = minimumWithdrawal;
             minimumWithdrawal = newMinimum;
+
+            minimumWithdrawalUpdates++;
         
-            emit MinimumWithdrawalUpdated(oldMinimum, newMinimum);
+            emit MinimumWithdrawalUpdated(oldMinimum, 
+            newMinimum);
         }
 
 
@@ -158,6 +163,8 @@ contract SmartWallet
     uint256 timestamp;
     }
 
+
+
     constructor() 
     {
         owner = msg.sender;
@@ -178,6 +185,8 @@ contract SmartWallet
 
         emit DepositCountUpdated(totalDeposits);
     }
+
+
 
     function withdraw(uint256 amount) external
     {
@@ -209,6 +218,8 @@ contract SmartWallet
         );
     }
 
+
+
     function transferOwnership(address newOwner) external 
     {
         if (msg.sender != owner) revert NotOwner();
@@ -220,19 +231,27 @@ contract SmartWallet
         emit OwnershipTransferred(oldOwner, newOwner);
     }
 
+
+
     function getBalance() external view returns (uint256) 
     {
         return address(this).balance;
     }
 
+
+
     function getOwner() external view returns (address) {
         return owner;
     }
+
+
 
     function getWithdrawalCount() external view returns (uint256)
         {
         return withdrawals.length;
         }
+
+
 
     function getWithdrawal(uint256 index)
         external
@@ -243,6 +262,8 @@ contract SmartWallet
     
         return (record.amount, record.timestamp);
         }
+
+
 
     function setWithdrawalLimit(uint256 newLimit) external 
     {
@@ -255,10 +276,13 @@ contract SmartWallet
     }
 
 
+
     function getLastWithdrawalTime() external view returns (uint256) 
     {
     return lastWithdrawalTime;
     }
+
+
 
     function getTotalDeposits() external view returns (uint256)   
     {
