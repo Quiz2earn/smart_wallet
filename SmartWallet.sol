@@ -45,6 +45,7 @@ contract SmartWallet
     event MinimumWithdrawalUpdated(
     uint256 oldMinimum,
     uint256 newMinimum
+    uint256 public minimumWithdrawalUpdatedAt;
     );
 
 
@@ -67,15 +68,15 @@ contract SmartWallet
 
 
 
-   function unpause() external 
-    {
-        if (msg.sender != owner) revert NotOwner();
-        if (!paused) revert AlreadyUnpaused();
-    
-        paused = false;
-    
-        emit Unpaused(msg.sender);
-    }
+    function unpause() external 
+        {
+            if (msg.sender != owner) revert NotOwner();
+            if (!paused) revert AlreadyUnpaused();
+        
+            paused = false;
+        
+            emit Unpaused(msg.sender);
+        }
 
 
 
@@ -90,7 +91,8 @@ contract SmartWallet
             uint256 oldMinimum = minimumWithdrawal;
             minimumWithdrawal = newMinimum;
 
-            minimumWithdrawalUpdates++;
+            minimumWithdrawalUpdates++;    
+            uint256 public minimumWithdrawalUpdatedAt;
         
             emit MinimumWithdrawalUpdated(oldMinimum, 
             newMinimum);
