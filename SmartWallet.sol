@@ -100,6 +100,13 @@ contract SmartWallet
 
 
 
+    function getMinimumWithdrawalUpdatedAt() external view returns (uint256)     
+        {
+            return minimumWithdrawalUpdatedAt;
+        }
+
+
+
    function withdraw(uint256 amount) external 
         {
             if (msg.sender != owner) revert 
