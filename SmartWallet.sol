@@ -80,58 +80,6 @@ contract SmartWallet
 
 
 
-    function setMinimumWithdrawal(uint256 newMinimum) external
-        {
-            if (msg.sender != owner) revert NotOwner();
-        
-            if (newMinimum > withdrawalLimit) {
-                revert MinimumExceedsLimit();
-            }
-        
-            uint256 oldMinimum = minimumWithdrawal;
-            minimumWithdrawal = newMinimum;
-
-            minimumWithdrawalUpdates++;    
-            uint256 public minimumWithdrawalUpdatedAt;
-        
-            emit MinimumWithdrawalUpdated(oldMinimum, 
-            newMinimum);
-        }
-
-
-
-    function getMinimumWithdrawalUpdatedAt() external view returns (uint256)     
-        {
-            return minimumWithdrawalUpdatedAt;
-        }
-
-
-
-   function withdraw(uint256 amount) external 
-        {
-            if (msg.sender != owner) revert 
-            NotOwner();
-        
-            if (paused) revert ContractPaused();
-    
-            if (!whitelist[msg.sender]) revert NotWhitelisted();
-        
-            if (amount > withdrawalLimit)
-            {
-              revert WithdrawalLimitExceeded();
-            }
-    
-            if (amount < minimumWithdrawal) 
-            {
-                revert WithdrawalBelowMinimum();
-            }
-        
-         payable(owner).transfer(amount);
-    
-         emit Withdraw(owner, amount);
-        }
-
-
 
     function setWhitelist(address account, bool status) external
     {
@@ -196,10 +144,65 @@ contract SmartWallet
     }
 
 
+
+
+
+
+
+    function setMinimumWithdrawal(uint256 newMinimum) external
+        {
+            if (msg.sender != owner) revert NotOwner();
+        
+            if (newMinimum > withdrawalLimit) {
+                revert MinimumExceedsLimit();
+            }
+        
+            uint256 oldMinimum = minimumWithdrawal;
+            minimumWithdrawal = newMinimum;
+
+            minimumWithdrawalUpdates++;    
+            uint256 public minimumWithdrawalUpdatedAt;
+        
+            emit MinimumWithdrawalUpdated(oldMinimum, 
+            newMinimum);
+        }
+
+
+
+
+
     function getMinimumWithdrawalUpdates() external view returns (uint256)
     {
         return minimumWithdrawalUpdates;
     }
+
+
+
+
+    function getWalletStatus()
+            external
+            view
+            returns (
+                address currentOwner,
+                uint256 balance,
+                bool isPaused,
+                uint256 minWithdrawal,
+                uint256 maxWithdrawal,
+                uint256 deposits,
+                uint256 withdrawalCount
+            )
+        {
+            return (
+                owner,
+                address(this).balance,
+                paused,
+                minimumWithdrawal,
+                withdrawalLimit,
+                totalDeposits,
+                withdrawals.length
+            );
+        }
+
 
 
 
