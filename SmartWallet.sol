@@ -122,6 +122,8 @@ contract SmartWallet
 
 
 
+
+
     constructor() 
     {
         owner = msg.sender;
@@ -172,9 +174,9 @@ contract SmartWallet
 
 
     function getMinimumWithdrawalUpdates() external view returns (uint256)
-    {
-        return minimumWithdrawalUpdates;
-    }
+        {
+            return minimumWithdrawalUpdates;
+        }
 
 
 
@@ -207,34 +209,70 @@ contract SmartWallet
 
 
     function withdraw(uint256 amount) external
-    {
-        if (msg.sender != owner) revert NotOwner();
-
-        if (address(this).balance < amount) 
         {
-            revert InsufficientBalance();
+            if (msg.sender != owner) revert NotOwner();
+    
+            if (address(this).balance < amount) 
+            {
+                revert InsufficientBalance();
+            }
+    
+            if (address(this).balance < amount) 
+            {
+                revert InsufficientBalance();
+            }
+    
+            payable(owner).transfer(amount);
+    
+            emit Withdraw(owner, amount);
+    
+            lastWithdrawalTime = block.timestamp;
+    
+            emit WithdrawalTimeUpdated(block.timestamp);
+    
+            withdrawals.push(
+                Withdrawal({
+                amount: amount,
+                timestamp: block.timestamp
+                })
+            );
         }
 
-        if (address(this).balance < amount) 
+
+
+    function withdrawAll() external 
         {
-            revert InsufficientBalance();
+            if (msg.sender != owner) revert NotOwner();
+        
+            if (paused) revert ContractPaused();
+        
+            if (!whitelist[msg.sender]) revert NotWhitelisted();
+        
+            uint256 balance = address(this).balance;
+        
+            if (balance == 0) {
+                revert InsufficientBalance();
+            }
+        
+            payable(owner).transfer(balance);
+        
+            emit Withdraw(owner, balance);
+        
+            withdrawals.push(
+                Withdrawal({
+                    amount: balance,
+                    timestamp: block.timestamp
+                })
+            );
+        
+            lastWithdrawalTime = block.timestamp;
+        
+            emit WithdrawalTimeUpdated(block.timestamp);
         }
 
-        payable(owner).transfer(amount);
 
-        emit Withdraw(owner, amount);
 
-        lastWithdrawalTime = block.timestamp;
 
-        emit WithdrawalTimeUpdated(block.timestamp);
-
-        withdrawals.push(
-            Withdrawal({
-            amount: amount,
-            timestamp: block.timestamp
-            })
-        );
-    }
 
 
 
