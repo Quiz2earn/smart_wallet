@@ -26,11 +26,15 @@ contract SmartWallet
 
     uint256 public totalDeposits;
 
+    uint256 public totalFullWithdrawals;
+
     uint256 public withdrawalLimit;
 
     uint256 public minimumWithdrawal;
 
     uint256 public lastWithdrawalTime;
+
+    uint256 public totalFullWithdrawals;
 
     uint256 public minimumWithdrawalUpdates;
 
@@ -249,17 +253,22 @@ contract SmartWallet
             if (!whitelist[msg.sender]) revert NotWhitelisted();
         
             uint256 balance = address(this).balance;
+
         
             if (balance == 0) {
                 revert InsufficientBalance();
             }
         
             payable(owner).transfer(balance);
+
+            totalFullWithdrawals++;
         
             emit Withdraw(owner, balance);
         
-            withdrawals.push(
-                Withdrawal({
+            withdrawals.push
+            (
+                Withdrawal
+                ({
                     amount: balance,
                     timestamp: block.timestamp
                 })
