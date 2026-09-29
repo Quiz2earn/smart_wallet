@@ -153,6 +153,12 @@ contract SmartWallet
 
 
 
+    function getTotalFullWithdrawals() external view returns (uint256) 
+        {
+            return totalFullWithdrawals;
+        }
+
+
 
 
     function setMinimumWithdrawal(uint256 newMinimum) external
