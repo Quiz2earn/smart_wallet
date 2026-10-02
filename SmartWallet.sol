@@ -36,6 +36,8 @@ contract SmartWallet
 
     uint256 public totalFullWithdrawals;
 
+    uint256 public lastFullWithdrawalTime;
+
     uint256 public minimumWithdrawalUpdates;
 
     event Deposit(address indexed sender, uint256 amount);
@@ -268,6 +270,8 @@ contract SmartWallet
             payable(owner).transfer(balance);
 
             totalFullWithdrawals++;
+
+            lastFullWithdrawalTime = block.timestamp;
         
             emit Withdraw(owner, balance);
         
