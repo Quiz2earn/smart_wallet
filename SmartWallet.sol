@@ -163,6 +163,16 @@ contract SmartWallet
 
 
 
+
+    function getLastFullWithdrawalTime() external view returns (uint256) 
+        {
+            return lastFullWithdrawalTime;
+        }
+
+
+
+
+
     function setMinimumWithdrawal(uint256 newMinimum) external
         {
             if (msg.sender != owner) revert NotOwner();
