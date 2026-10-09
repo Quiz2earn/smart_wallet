@@ -56,6 +56,15 @@ contract SmartWallet
 
 
 
+
+    event FullWithdrawal(
+    address indexed owner,
+    uint256 amount,
+    uint256 timestamp
+    );
+
+
+
     function pause() external 
     {
             if (msg.sender != owner) revert 
@@ -284,6 +293,8 @@ contract SmartWallet
             lastFullWithdrawalTime = block.timestamp;
         
             emit Withdraw(owner, balance);
+
+            emit FullWithdrawal(owner, balance, block.timestamp);
         
             withdrawals.push
             (
