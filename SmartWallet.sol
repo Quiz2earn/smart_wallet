@@ -26,6 +26,8 @@ contract SmartWallet
 
     uint256 public totalDeposits;
 
+    uint256 public lastDepositTime;
+
     uint256 public totalFullWithdrawals;
 
     uint256 public withdrawalLimit;
@@ -150,10 +152,16 @@ contract SmartWallet
         emit OwnershipTransferred(address(0), owner);
     }
 
+
+
+
+
     receive() external payable
     {
 
         totalDeposits++;
+
+        lastDepositTime = block.timestamp;
 
         emit Deposit(msg.sender, msg.value);
 
