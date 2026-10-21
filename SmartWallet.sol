@@ -173,6 +173,7 @@ contract SmartWallet
 
 
     function getTotalFullWithdrawals() external view returns (uint256) 
+
         {
             return totalFullWithdrawals;
         }
@@ -182,10 +183,20 @@ contract SmartWallet
 
 
     function getLastFullWithdrawalTime() external view returns (uint256) 
+
         {
             return lastFullWithdrawalTime;
         }
 
+
+
+
+
+    function getLastDepositTime() external view returns (uint256) 
+
+        {
+            return lastDepositTime;
+        }
 
 
 
