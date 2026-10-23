@@ -98,27 +98,45 @@ contract SmartWallet
 
 
 
+
+
+
+    function getAvailableBalance() external view returns (uint256) 
+        {
+            if (paused) {
+                return 0;
+            }
+        
+            return address(this).balance;
+        }
+
+
+
+
+
+
+
     function setWhitelist(address account, bool status) external
-    {
-            if (msg.sender != owner) revert NotOwner();
-            if (account == address(0)) revert InvalidAddress();
-        
-            bool previousStatus = whitelist[account];
-        
-            whitelist[account] = status;
-        
-            if (status && !previousStatus) 
-            {
-                whitelistCount++;
-            }
-        
-            if (!status && previousStatus)     
-            {
-                whitelistCount--;
-            }
-        
-            emit WhitelistUpdated(account, status);
-    }
+        {
+                if (msg.sender != owner) revert NotOwner();
+                if (account == address(0)) revert InvalidAddress();
+            
+                bool previousStatus = whitelist[account];
+            
+                whitelist[account] = status;
+            
+                if (status && !previousStatus) 
+                {
+                    whitelistCount++;
+                }
+            
+                if (!status && previousStatus)     
+                {
+                    whitelistCount--;
+                }
+            
+                emit WhitelistUpdated(account, status);
+        }
 
     
     event OwnershipTransferred(
@@ -132,41 +150,41 @@ contract SmartWallet
     event WithdrawalLimitUpdated(uint256 oldLimit, uint256 newLimit);
 
     struct Withdrawal
-    {
-    uint256 amount;
-    uint256 timestamp;
-    }
+        {
+        uint256 amount;
+        uint256 timestamp;
+        }
 
 
 
 
 
     constructor() 
-    {
-        owner = msg.sender;
-
-        withdrawalLimit = 10 ether;
-
-        minimumWithdrawal = 0.01 ether;
-
-        emit OwnershipTransferred(address(0), owner);
-    }
-
+        {
+            owner = msg.sender;
+    
+            withdrawalLimit = 10 ether;
+    
+            minimumWithdrawal = 0.01 ether;
+    
+            emit OwnershipTransferred(address(0), owner);
+        }
+    
 
 
 
 
     receive() external payable
-    {
-
-        totalDeposits++;
-
-        lastDepositTime = block.timestamp;
-
-        emit Deposit(msg.sender, msg.value);
-
-        emit DepositCountUpdated(totalDeposits);
-    }
+        {
+    
+            totalDeposits++;
+    
+            lastDepositTime = block.timestamp;
+    
+            emit Deposit(msg.sender, msg.value);
+    
+            emit DepositCountUpdated(totalDeposits);
+        }
 
 
 
