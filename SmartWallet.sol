@@ -26,6 +26,8 @@ contract SmartWallet
 
     uint256 public totalDeposits;
 
+    uint256 public totalDepositedAmount;
+
     uint256 public lastDepositTime;
 
     uint256 public totalFullWithdrawals;
@@ -178,6 +180,8 @@ contract SmartWallet
         {
     
             totalDeposits++;
+
+            totalDepositedAmount += msg.value;
     
             lastDepositTime = block.timestamp;
     
@@ -219,6 +223,8 @@ contract SmartWallet
 
 
 
+
+
     function setMinimumWithdrawal(uint256 newMinimum) external
         {
             if (msg.sender != owner) revert NotOwner();
@@ -241,10 +247,15 @@ contract SmartWallet
 
 
 
+
+
     function getMinimumWithdrawalUpdates() external view returns (uint256)
         {
             return minimumWithdrawalUpdates;
         }
+
+
+
 
 
 
@@ -276,19 +287,22 @@ contract SmartWallet
 
 
 
+
+
+
     function withdraw(uint256 amount) external
         {
             if (msg.sender != owner) revert NotOwner();
     
             if (address(this).balance < amount) 
-            {
-                revert InsufficientBalance();
-            }
+                {
+                    revert InsufficientBalance();
+                }
     
             if (address(this).balance < amount) 
-            {
-                revert InsufficientBalance();
-            }
+                {
+                    revert InsufficientBalance();
+                }
     
             payable(owner).transfer(amount);
     
@@ -305,6 +319,10 @@ contract SmartWallet
                 })
             );
         }
+
+
+
+
 
 
 
@@ -354,28 +372,43 @@ contract SmartWallet
 
 
     function transferOwnership(address newOwner) external 
-    {
-        if (msg.sender != owner) revert NotOwner();
-        if (newOwner == address(0)) revert InvalidAddress();
+        {
+            if (msg.sender != owner) revert NotOwner();
+            if (newOwner == address(0)) revert InvalidAddress();
+    
+            address oldOwner = owner;
+            owner = newOwner;
+    
+            emit OwnershipTransferred(oldOwner, newOwner);
+        }
 
-        address oldOwner = owner;
-        owner = newOwner;
 
-        emit OwnershipTransferred(oldOwner, newOwner);
-    }
+
+
+
 
 
 
     function getBalance() external view returns (uint256) 
-    {
-        return address(this).balance;
-    }
+        {
+            return address(this).balance;
+        }
 
 
 
-    function getOwner() external view returns (address) {
-        return owner;
-    }
+
+
+
+
+
+
+    function getOwner() external view returns (address) 
+        {
+            return owner;
+        }
+
+
+
 
 
 
@@ -383,6 +416,10 @@ contract SmartWallet
         {
         return withdrawals.length;
         }
+
+
+
+
 
 
 
@@ -398,33 +435,51 @@ contract SmartWallet
 
 
 
+
+
+
     function setWithdrawalLimit(uint256 newLimit) external 
-    {
-        if (msg.sender != owner) revert NotOwner();
-    
-        uint256 oldLimit = withdrawalLimit;
-        withdrawalLimit = newLimit;
-    
-        emit WithdrawalLimitUpdated(oldLimit, newLimit);
-    }
+        {
+            if (msg.sender != owner) revert NotOwner();
+        
+            uint256 oldLimit = withdrawalLimit;
+            withdrawalLimit = newLimit;
+        
+            emit WithdrawalLimitUpdated(oldLimit, newLimit);
+        }
+
+
+
+
+
 
 
 
     function getLastWithdrawalTime() external view returns (uint256) 
-    {
-    return lastWithdrawalTime;
-    }
+        {
+        return lastWithdrawalTime;
+        }
+
+
+
+
+
 
 
 
     function getTotalDeposits() external view returns (uint256)   
-    {
-    return totalDeposits;
-    }
+        {
+        return totalDeposits;
+        }
+
+
+
+
+
 
     function isWhitelisted(address account) external view returns (bool)
-    {
-    return whitelist[account];
-    }
+        {
+        return whitelist[account];
+        }
 
 }
