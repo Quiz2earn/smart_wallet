@@ -225,6 +225,16 @@ contract SmartWallet
 
 
 
+
+    function getTotalDepositedAmount() external view returns (uint256)    
+        {
+            return totalDepositedAmount;
+        }
+
+
+
+
+
     function setMinimumWithdrawal(uint256 newMinimum) external
         {
             if (msg.sender != owner) revert NotOwner();
