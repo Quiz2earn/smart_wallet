@@ -30,6 +30,8 @@ contract SmartWallet
 
     uint256 public lastDepositTime;
 
+    uint256 public totalWithdrawnAmount;
+
     uint256 public totalFullWithdrawals;
 
     uint256 public withdrawalLimit;
@@ -315,7 +317,11 @@ contract SmartWallet
                 }
     
             payable(owner).transfer(amount);
-    
+
+            totalWithdrawnAmount += balance;
+
+            totalWithdrawnAmount += amount;    
+
             emit Withdraw(owner, amount);
     
             lastWithdrawalTime = block.timestamp;
