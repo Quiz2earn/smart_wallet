@@ -206,6 +206,15 @@ contract SmartWallet
 
 
 
+
+    function getTotalWithdrawnAmount() external view returns (uint256) 
+
+        {
+            return totalWithdrawnAmount;
+        }
+
+
+
     function getLastFullWithdrawalTime() external view returns (uint256) 
 
         {
