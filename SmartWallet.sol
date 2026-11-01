@@ -237,10 +237,25 @@ contract SmartWallet
 
 
 
-    function getTotalDepositedAmount() external view returns (uint256)    
+    function getTotalDepositedAmount() external view returns (uint256)   
+
         {
             return totalDepositedAmount;
         }
+
+
+
+
+
+
+
+    function getNetDepositedAmount() external view returns (uint256) 
+
+        {
+            return totalDepositedAmount - totalWithdrawnAmount;
+        }
+
+
 
 
 
