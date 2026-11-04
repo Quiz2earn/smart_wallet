@@ -142,6 +142,9 @@ contract SmartWallet
                 emit WhitelistUpdated(account, status);
         }
 
+
+
+
     
     event OwnershipTransferred(
         address indexed previousOwner,
@@ -152,6 +155,10 @@ contract SmartWallet
     event Unpaused(address indexed account);
 
     event WithdrawalLimitUpdated(uint256 oldLimit, uint256 newLimit);
+
+
+
+
 
     struct Withdrawal
         {
@@ -207,11 +214,16 @@ contract SmartWallet
 
 
 
+
     function getTotalWithdrawnAmount() external view returns (uint256) 
 
         {
             return totalWithdrawnAmount;
         }
+
+
+
+
 
 
 
@@ -225,6 +237,10 @@ contract SmartWallet
 
 
 
+
+
+
+
     function getLastDepositTime() external view returns (uint256) 
 
         {
@@ -232,6 +248,18 @@ contract SmartWallet
         }
 
 
+
+
+
+
+
+
+    function hasSufficientBalance(uint256 amount) external view returns (bool) 
+
+        {
+            return address(this).balance >= amount;
+        }
+        
 
 
 
