@@ -72,20 +72,20 @@ contract SmartWallet
 
 
     function pause() external 
-    {
-            if (msg.sender != owner) revert 
-        NotOwner();
-
-            if (paused) revert AlreadyPaused();
-
-            whitelist[msg.sender] = true;
-        
-            paused = true;
-        
-            emit Paused(msg.sender);
-        
-            Withdrawal[] private withdrawals;
-    }
+        {
+                if (msg.sender != owner) revert 
+            NotOwner();
+    
+                if (paused) revert AlreadyPaused();
+    
+                whitelist[msg.sender] = true;
+            
+                paused = true;
+            
+                emit Paused(msg.sender);
+            
+                Withdrawal[] private withdrawals;
+        }
 
 
 
@@ -198,6 +198,31 @@ contract SmartWallet
     
             emit DepositCountUpdated(totalDeposits);
         }
+
+
+
+
+
+
+
+
+    function canWithdraw(uint256 amount) external view returns (bool)
+        {
+            if (paused) return false;
+            if (!whitelist[msg.sender]) return false;
+            if (amount < minimumWithdrawal) return false;
+            if (amount > withdrawalLimit) return false;
+            if (address(this).balance < amount) return false;
+        
+            return true;
+        }
+
+
+
+
+
+
+
 
 
 
