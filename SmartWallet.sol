@@ -60,14 +60,20 @@ contract SmartWallet
     uint256 public minimumWithdrawalUpdatedAt;
     );
 
-
-
-
     event FullWithdrawal(
     address indexed owner,
     uint256 amount,
     uint256 timestamp
     );
+
+    event WithdrawalCheck(
+    address indexed account,
+    uint256 amount,
+    bool eligible
+    );
+
+
+
 
 
 
@@ -206,15 +212,17 @@ contract SmartWallet
 
 
 
-    function canWithdraw(uint256 amount) external view returns (bool)
+    function canWithdraw(uint256 amount) external returns (bool) 
         {
-            if (paused) return false;
-            if (!whitelist[msg.sender]) return false;
-            if (amount < minimumWithdrawal) return false;
-            if (amount > withdrawalLimit) return false;
-            if (address(this).balance < amount) return false;
+            bool eligible = !paused
+                && whitelist[msg.sender]
+                && amount >= minimumWithdrawal
+                && amount <= withdrawalLimit
+                && address(this).balance >= amount;
         
-            return true;
+            emit WithdrawalCheck(msg.sender, amount, eligible);
+        
+            return eligible;
         }
 
 
