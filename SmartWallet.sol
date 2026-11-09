@@ -30,6 +30,8 @@ contract SmartWallet
 
     uint256 public lastDepositTime;
 
+    uint256 public pauseStateChanges;
+
     uint256 public totalWithdrawnAmount;
 
     uint256 public totalFullWithdrawals;
@@ -87,6 +89,8 @@ contract SmartWallet
                 whitelist[msg.sender] = true;
             
                 paused = true;
+
+                pauseStateChanges++;
             
                 emit Paused(msg.sender);
             
@@ -101,6 +105,8 @@ contract SmartWallet
             if (!paused) revert AlreadyUnpaused();
         
             paused = false;
+
+            pauseStateChanges++;
         
             emit Unpaused(msg.sender);
         }
