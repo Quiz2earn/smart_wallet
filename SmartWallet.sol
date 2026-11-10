@@ -292,6 +292,15 @@ contract SmartWallet
 
 
 
+    function getPauseStateChanges() external view returns (uint256) 
+        {
+            return pauseStateChanges;
+        }
+
+
+
+
+
 
     function hasSufficientBalance(uint256 amount) external view returns (bool) 
 
