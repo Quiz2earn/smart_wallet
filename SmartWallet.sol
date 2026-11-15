@@ -122,6 +122,16 @@ contract SmartWallet
 
 
 
+    function getLastPauseStateChangeTime() external view returns (uint256) 
+        {
+            return lastPauseStateChangeTime;
+        }
+
+
+
+
+
+
 
     function getAvailableBalance() external view returns (uint256) 
         {
