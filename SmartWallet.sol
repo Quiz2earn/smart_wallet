@@ -2,15 +2,26 @@
 pragma solidity ^0.8.0;
 
 error NotOwner();
+
 error AlreadyPaused();
+
 error InvalidAddress();
+
 error ContractPaused();
+
 error NotWhitelisted();
+
 error AlreadyUnpaused();
+
 error InsufficientBalance();
+
 error MinimumExceedsLimit();
+
 error WithdrawalBelowMinimum();
+
 error WithdrawalLimitExceeded();
+
+error DailyWithdrawalLimitReached();
 
 
 
@@ -49,6 +60,12 @@ contract SmartWallet
     uint256 public lastFullWithdrawalTime;
 
     uint256 public minimumWithdrawalUpdates;
+
+    uint256 public dailyWithdrawalLimit;
+
+    uint256 public dailyWithdrawalCount;
+    
+    uint256 public lastWithdrawalDay;
 
     event Deposit(address indexed sender, uint256 amount);
 
@@ -205,6 +222,8 @@ contract SmartWallet
             withdrawalLimit = 10 ether;
     
             minimumWithdrawal = 0.01 ether;
+
+            dailyWithdrawalLimit = 5;
     
             emit OwnershipTransferred(address(0), owner);
         }
@@ -431,6 +450,21 @@ contract SmartWallet
                 {
                     revert InsufficientBalance();
                 }
+
+            uint256 currentDay = block.timestamp / 1 days;
+
+            if (currentDay != lastWithdrawalDay) 
+                {
+                    dailyWithdrawalCount = 0;
+                    lastWithdrawalDay = currentDay;
+                }
+            
+            if (dailyWithdrawalCount >= dailyWithdrawalLimit) 
+                {
+                    revert DailyWithdrawalLimitReached();
+                }
+            
+            dailyWithdrawalCount++;
     
             payable(owner).transfer(amount);
 
