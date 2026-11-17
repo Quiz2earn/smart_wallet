@@ -503,10 +503,27 @@ contract SmartWallet
             uint256 balance = address(this).balance;
 
         
-            if (balance == 0) {
-                revert InsufficientBalance();
-            }
-        
+            if (balance == 0)
+                {
+                    revert InsufficientBalance();
+                }
+
+
+            uint256 currentDay = block.timestamp / 1 days;
+
+            if (currentDay != lastWithdrawalDay) 
+                {
+                    dailyWithdrawalCount = 0;
+                    lastWithdrawalDay = currentDay;
+                }
+            
+            if (dailyWithdrawalCount >= dailyWithdrawalLimit) 
+                {
+                    revert DailyWithdrawalLimitReached();
+                }
+            
+            dailyWithdrawalCount++;
+
             payable(owner).transfer(balance);
 
             totalFullWithdrawals++;
