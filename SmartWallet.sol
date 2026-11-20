@@ -93,6 +93,10 @@ contract SmartWallet
     bool eligible
     );
 
+    event DailyWithdrawalLimitUpdated(
+    uint256 oldLimit,
+    uint256 newLimit
+    );
 
 
 
@@ -283,6 +287,20 @@ contract SmartWallet
             return totalFullWithdrawals;
         }
 
+
+
+
+
+
+    function setDailyWithdrawalLimit(uint256 newLimit) external 
+        {
+            if (msg.sender != owner) revert NotOwner();
+        
+            uint256 oldLimit = dailyWithdrawalLimit;
+            dailyWithdrawalLimit = newLimit;
+        
+            emit DailyWithdrawalLimitUpdated(oldLimit, newLimit);
+        }
 
 
 
