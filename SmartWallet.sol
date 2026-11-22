@@ -61,6 +61,8 @@ contract SmartWallet
 
     uint256 public minimumWithdrawalUpdates;
 
+    uint256 public dailyWithdrawalLimitUpdates;
+
     uint256 public dailyWithdrawalLimit;
 
     uint256 public dailyWithdrawalCount;
@@ -298,6 +300,8 @@ contract SmartWallet
         
             uint256 oldLimit = dailyWithdrawalLimit;
             dailyWithdrawalLimit = newLimit;
+
+            dailyWithdrawalLimitUpdates++;
         
             emit DailyWithdrawalLimitUpdated(oldLimit, newLimit);
         }
