@@ -63,6 +63,8 @@ contract SmartWallet
 
     uint256 public dailyWithdrawalLimitUpdates;
 
+    uint256 public dailyWithdrawalLimitUpdatedAt;
+
     uint256 public dailyWithdrawalLimit;
 
     uint256 public dailyWithdrawalCount;
@@ -302,6 +304,8 @@ contract SmartWallet
             dailyWithdrawalLimit = newLimit;
 
             dailyWithdrawalLimitUpdates++;
+
+            dailyWithdrawalLimitUpdatedAt = block.timestamp;
         
             emit DailyWithdrawalLimitUpdated(oldLimit, newLimit);
         }
