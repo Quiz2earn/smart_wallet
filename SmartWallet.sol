@@ -323,6 +323,11 @@ contract SmartWallet
 
 
 
+    function getDailyWithdrawalLimitUpdatedAt() external view returns (uint256) 
+        {
+            return dailyWithdrawalLimitUpdatedAt;
+        }
+
 
 
     function getTotalWithdrawnAmount() external view returns (uint256) 
