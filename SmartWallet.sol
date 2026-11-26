@@ -368,6 +368,28 @@ contract SmartWallet
 
 
 
+
+
+    function canWithdrawToday() external view returns (bool) 
+        {
+            uint256 currentDay = block.timestamp / 1 days;
+        
+            if (currentDay != lastWithdrawalDay) {
+                return dailyWithdrawalLimit > 0;
+            }
+        
+            return dailyWithdrawalCount < dailyWithdrawalLimit;
+        }
+        
+
+
+
+
+
+
+
+
+
     function getPauseStateChanges() external view returns (uint256) 
         {
             return pauseStateChanges;
