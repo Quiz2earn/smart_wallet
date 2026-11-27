@@ -105,6 +105,17 @@ contract SmartWallet
 
 
 
+    event DailyWithdrawalRecorded(
+    address indexed account,
+    uint256 withdrawalCount,
+    uint256 timestamp
+    );
+
+
+
+
+
+
 
     function pause() external 
         {
@@ -528,6 +539,12 @@ contract SmartWallet
                 }
             
             dailyWithdrawalCount++;
+
+            emit DailyWithdrawalRecorded(
+            msg.sender,
+            dailyWithdrawalCount,
+            block.timestamp
+            );
     
             payable(owner).transfer(amount);
 
@@ -586,6 +603,13 @@ contract SmartWallet
                 }
             
             dailyWithdrawalCount++;
+
+            emit DailyWithdrawalRecorded(
+            msg.sender,
+            dailyWithdrawalCount,
+            block.timestamp
+            );
+
 
             payable(owner).transfer(balance);
 
