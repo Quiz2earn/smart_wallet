@@ -367,6 +367,21 @@ contract SmartWallet
 
 
 
+    function getDailyWithdrawalCount() external view returns (uint256) 
+        {
+            uint256 currentDay = block.timestamp / 1 days;
+        
+            if (currentDay != lastWithdrawalDay) {
+                return 0;
+            }
+        
+            return dailyWithdrawalCount;
+        }
+
+
+
+
+
     function getLastDepositTime() external view returns (uint256) 
 
         {
